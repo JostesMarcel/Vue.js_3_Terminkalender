@@ -1,10 +1,10 @@
 <template>
   <div class="card border-start" :class="cardClasses">
-    <div class="card-header text-center" :class="cardHeaderClasses" role="button">
+    <div class="card-header text-center" :class="cardHeaderClasses" role="button" @click="setActiveDay()">
       <strong>{{ day.fullName }}</strong>
     </div>
     <div class="card-body">
-    <CalendarEvent v-for="event in day.events" :key="event.title" :event="event">
+    <CalendarEvent v-for="event in day.events" :key="event.title" :event="event" :day="day">
       <!-- <template v-slot:eventPriority="slotProps"> -->
       <template #eventPriority="slotProps">
         <h5>{{ slotProps.priorityDisplayName }}</h5>
@@ -58,6 +58,11 @@ export default {
       cardHeaderClasses() {
         return this.day.id === Store.getters.activeDay().id ? ["bg-primary", "text-white"] : null
       },
+    },
+    methods: {
+      setActiveDay() {
+        Store.mutations.setActiveDay(this.day.id)
+      }
     }
 }
 </script>
