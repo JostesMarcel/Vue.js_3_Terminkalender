@@ -3,10 +3,12 @@ import { reactive, readonly } from "vue"
 
 const state = reactive({
     calendarWeekData,
+    activeView: "CalendarWeek",
 })
 
 const getters = {
     activeDay: () => state.calendarWeekData.find((day) => day.active),
+    activeView: () => state.activeView,
 }
 
 const mutations = {
@@ -14,6 +16,9 @@ const mutations = {
         state.calendarWeekData.map((dayObj) => {
             dayObj.id === dayId ? (dayObj.active = true) : (dayObj.active = false)
         })
+    },
+    setActiveView(view) {
+        state.activeView = view
     },
     storeEvent(eventDO) {
         const activeDay = getters.activeDay()
